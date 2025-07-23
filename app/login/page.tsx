@@ -8,9 +8,10 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { Mail, Lock, Eye, EyeOff } from "lucide-react";
+import { Mail, Lock, Eye, EyeOff, AlertCircle, CheckCircle } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { loginUser } from "@/lib/api";
 
 // Form validation schema
 const loginSchema = z.object({
@@ -24,6 +25,8 @@ export default function LoginPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [isGoogleLoading, setIsGoogleLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [loginError, setLoginError] = useState<string | null>(null);
+  const [loginSuccess, setLoginSuccess] = useState(false);
 
   const form = useForm<LoginFormValues>({
     resolver: zodResolver(loginSchema),
@@ -36,13 +39,26 @@ export default function LoginPage() {
   // Handle form submission
   const onSubmit = async (data: LoginFormValues) => {
     setIsLoading(true);
+    setLoginError(null);
+    setLoginSuccess(false);
+    
     try {
-      // TODO: Implement login logic
-      console.log("Login data:", data);
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 2000));
+      const response = await loginUser(data.email, data.password);
+      
+      // Store token if provided
+      if (response.token) {
+        localStorage.setItem('authToken', response.token);
+      }
+      
+      setLoginSuccess(true);
+      
+      // Redirect to dashboard or home page after successful login
+      // You can use Next.js router here
+      // router.push('/dashboard');
+      
     } catch (error) {
       console.error("Login error:", error);
+      setLoginError(error instanceof Error ? error.message : 'Login failed. Please try again.');
     } finally {
       setIsLoading(false);
     }
@@ -93,6 +109,22 @@ export default function LoginPage() {
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">
+            {/* Error Message */}
+            {loginError && (
+              <div className="flex items-center space-x-2 p-3 bg-red-50 border border-red-200 rounded-lg">
+                <AlertCircle className="h-5 w-5 text-red-500" />
+                <span className="text-red-700 text-sm">{loginError}</span>
+              </div>
+            )}
+
+            {/* Success Message */}
+            {loginSuccess && (
+              <div className="flex items-center space-x-2 p-3 bg-green-50 border border-green-200 rounded-lg">
+                <CheckCircle className="h-5 w-5 text-green-500" />
+                <span className="text-green-700 text-sm">Login successful! Redirecting...</span>
+              </div>
+            )}
+
             {/* Login Form */}
             <Form {...form}>
               <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
