@@ -10,6 +10,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Mail, Lock, User, Phone, MapPin, Eye, EyeOff } from "lucide-react";
 import Link from "next/link";
+import { signupUser } from "@/lib/api";
 
 // Validation schema with proper field validation
 const signupFormSchema = z.object({
@@ -69,17 +70,20 @@ export default function SignupPage() {
   const onSubmit = async (values: SignupFormValues) => {
     setIsLoading(true);
     try {
-      // TODO: Implement actual signup logic here
-      console.log("Signup form submitted:", values);
+      // Call the signup API
+      const response = await signupUser(values);
       
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      
-      // Handle successful signup (redirect, show success message, etc.)
+      // Handle successful signup
       alert("Account created successfully!");
+      console.log("Signup successful:", response);
+      
+      // Optional: Redirect to login page or dashboard
+      // window.location.href = '/login';
     } catch (error) {
       console.error("Signup error:", error);
-      // Handle signup error
+      // Handle signup error - show user-friendly error message
+      const errorMessage = error instanceof Error ? error.message : "An error occurred during signup";
+      alert(`Signup failed: ${errorMessage}`);
     } finally {
       setIsLoading(false);
     }
