@@ -1,7 +1,15 @@
+'use client'
 import React from 'react';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 
 const Nav = () => {
+  const router = useRouter();
+
+  const handleShopNowClick = () => {
+    router.push('/shop');
+  };
+
   return (
     <div className="flex flex-col w-full">
       {/* Top cream section */}
@@ -38,7 +46,10 @@ const Nav = () => {
         {/* Right Section: Shop Now Button and Cart */}
         <div className="flex items-center gap-4 mr-4">
           {/* Shop Now Button */}
-          <button className="inline-flex items-center justify-center gap-[10px] bg-[#88b392] rounded-[20px] px-5 py-[10px] w-[144px] h-[40px] whitespace-nowrap">
+          <button 
+            onClick={handleShopNowClick}
+            className="inline-flex items-center justify-center gap-[10px] bg-[#88b392] rounded-[20px] px-5 py-[10px] w-[144px] h-[40px] whitespace-nowrap"
+          >
             <span className="text-[#fff8ee] font-poppins text-[20px] font-semibold leading-5 tracking-[0.4px] whitespace-nowrap">
               Shop Now
             </span>
