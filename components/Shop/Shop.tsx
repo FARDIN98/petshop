@@ -7,7 +7,7 @@ const Shop = () => {
     <div className="min-h-screen bg-white">
       {/* Header Section */}
       <div className="flex justify-start py-8 px-8 pl-24">
-        <p className="text-[#5e5e5e] font-['Poppins'] text-xl leading-[30px] w-[408px] h-[30px]">
+        <p className="text-[#5e5e5e] font-poppins text-xl leading-[30px] w-[408px] h-[30px]">
           We&apos;re here with care that feels like family
         </p>
       </div>
@@ -19,7 +19,7 @@ const Shop = () => {
       
       {/* Cat Food Section */}
       <div className="flex justify-start py-8 px-8 pl-20">
-        <p className="text-[#5e5e5e] font-['Poppins'] text-xl font-bold leading-[30px] w-[92px] h-[30px]">
+        <p className="text-[#5e5e5e] font-poppins text-xl font-bold leading-[30px] w-[92px] h-[30px]">
           Cat Food
         </p>
       </div>

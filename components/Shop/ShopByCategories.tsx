@@ -37,7 +37,7 @@ const CategoryCard: React.FC<CategoryCardProps> = ({ category, onClick }) => {
       onClick={handleClick}
     >
       <div className="w-11 h-11 rounded-full bg-gray-300"></div>
-      <p className="text-[#5e5e5e] font-['Poppins'] text-xl font-medium leading-[30px] flex-1 ml-4">
+      <p className="text-[#5e5e5e] font-poppins text-xl font-medium leading-[30px] flex-1 ml-4">
         {category.name}
       </p>
     </div>
